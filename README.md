@@ -1,14 +1,12 @@
 # 🍎 AI Fruit Prediction API
+
 This project is a RESTful API developed with FastAPI designed to predict and classify 20 distinct types of fruits. The core prediction engine is powered by a Random Forest machine learning model (fruit_model.pkl).
----
 
 ## 🚀 Key Features
 - Predicts and classifies up to 20 different fruit categories based on input data.
 - Built with FastAPI, ensuring high performance and asynchronous request handling.
 - Includes integrated HTML templates for immediate testing and preliminary usage.
 - Fully containerized, supporting seamless deployment via Docker and Docker Compose.
-
----
 
 ## ⚙️ Installation and Setup
 
