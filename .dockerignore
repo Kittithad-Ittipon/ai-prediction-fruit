@@ -1,0 +1,6 @@
+.env
+.gitignore
+.dockerignore
+__pycache__
+*/app/.env
+*/app/__pycache__

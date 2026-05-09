@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  fastdev5090:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM python:3.13-slim
+        WORKDIR /app
+        COPY ./app/requirements.txt ./
+        RUN pip install --no-cache-dir -r requirements.txt
+        COPY ./app .
+        EXPOSE 8000
+        CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    container_name: fastdev5090
+    networks:
+      - lan-net
+
+networks:
+  lan-net:
+    external: true

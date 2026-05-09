@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fruit Predictor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/44/44190.png" type="image/x-icon">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(214.3, 31.8%, 91.4%)",
+                        input: "hsl(214.3, 31.8%, 91.4%)",
+                        ring: "hsl(222.2, 84%, 4.9%)",
+                        background: "hsl(0, 0%, 100%)",
+                        foreground: "hsl(222.2, 84%, 4.9%)",
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        *{
+            font-family: 'Prompt', sans-serif;
+        }
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4 font-sans text-foreground">
+    <form method="post" class="bg-background border border-border shadow-sm rounded-xl w-full max-w-lg px-10 py-8" onsubmit="formsubmit()">
+        <div class="text-center mb-6">
+            <div class="bg-indigo-50 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm border border-indigo-100">
+                <i class="fa-solid fa-magnifying-glass-chart text-indigo-500 text-xl"></i>
+            </div>
+            <h1 class="text-2xl font-semibold tracking-tight">Fruit Predictor</h1>
+            <p class="text-sm text-slate-500 mt-1">Select the features to predict the fruit.</p>
+        </div>
+        <div class="space-y-5">
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-1.5">
+                    <label class="text-sm font-medium"><i class="fa-solid fa-ruler-combined text-slate-400 mr-1"></i> Size (cm)</label>
+                    <input type="number" id="size" placeholder="e.g. 0.9 - 27.5" class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="text-sm font-medium"><i class="fa-solid fa-scale-balanced text-slate-400 mr-1"></i> Weight (g)</label>
+                    <input type="number" id="weight" placeholder="e.g. 4.5 - 3300" class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400">
+                </div>
+            </div>
+            <div class="space-y-1.5">
+                <label class="text-sm font-medium"><i class="fa-solid fa-shapes text-slate-400 mr-1"></i> Shape</label>
+                <div class="grid grid-cols-3 gap-2">
+                    <label class="cursor-pointer relative">
+                        <input type="radio" name="shape" value="0" class="peer sr-only" checked>
+                        <div class="rounded-md border border-slate-200 bg-white p-3 text-center hover:bg-slate-50 peer-checked:border-indigo-500 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 transition-all">
+                            <i class="fa-solid fa-ruler text-lg mb-1"></i>
+                            <div class="text-xs font-medium">Long</div>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer relative">
+                        <input type="radio" name="shape" value="1" class="peer sr-only">
+                        <div class="rounded-md border border-slate-200 bg-white p-3 text-center hover:bg-slate-50 peer-checked:border-indigo-500 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 transition-all">
+                            <i class="fa-solid fa-egg text-lg mb-1"></i>
+                            <div class="text-xs font-medium">Oval</div>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer relative">
+                        <input type="radio" name="shape" value="2" class="peer sr-only">
+                        <div class="rounded-md border border-slate-200 bg-white p-3 text-center hover:bg-slate-50 peer-checked:border-indigo-500 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 transition-all">
+                            <i class="fa-solid fa-circle text-lg mb-1"></i>
+                            <div class="text-xs font-medium">Round</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="space-y-1.5">
+                <label class="text-sm font-medium"><i class="fa-solid fa-utensils text-slate-400 mr-1"></i> Taste</label>
+                <div class="grid grid-cols-3 gap-2">
+                    <label class="cursor-pointer">
+                        <input type="radio" name="taste" value="0" class="peer sr-only" checked>
+                        <div class="rounded-md border border-slate-200 bg-white p-2 text-center hover:bg-slate-50 peer-checked:border-indigo-500 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 transition-all">
+                            <i class="fa-solid fa-lemon text-lg mb-1"></i>
+                            <div class="text-xs font-medium">Sour</div>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="taste" value="1" class="peer sr-only">
+                        <div class="rounded-md border border-slate-200 bg-white p-2 text-center hover:bg-slate-50 peer-checked:border-indigo-500 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 transition-all">
+                            <i class="fa-solid fa-cubes-stacked text-lg mb-1"></i>
+                            <div class="text-xs font-medium">Sweet</div>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="taste" value="2" class="peer sr-only">
+                        <div class="rounded-md border border-slate-200 bg-white p-2 text-center hover:bg-slate-50 peer-checked:border-indigo-500 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 transition-all">
+                            <i class="fa-solid fa-face-grin-tongue-squint text-lg mb-1"></i>
+                            <div class="text-xs font-medium">Tangy</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="space-y-1.5">
+                <label class="text-sm font-medium"><i class="fa-solid fa-palette text-slate-400 mr-1"></i> Color</label>
+                <div class="grid grid-cols-4 gap-2">
+                    <label class="cursor-pointer">
+                        <input type="radio" name="color" value="0" class="peer sr-only">
+                        <div class="rounded-md border border-slate-200 bg-white p-2 flex flex-col items-center hover:bg-slate-50 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all">
+                            <div class="w-5 h-5 rounded-full bg-blue-500 mb-1 shadow-sm"></div>
+                            <span class="text-[11px] font-medium text-slate-600">Blue</span>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="color" value="1" class="peer sr-only">
+                        <div class="rounded-md border border-slate-200 bg-white p-2 flex flex-col items-center hover:bg-slate-50 peer-checked:border-amber-800 peer-checked:bg-amber-50 transition-all">
+                            <div class="w-5 h-5 rounded-full bg-amber-800 mb-1 shadow-sm"></div>
+                            <span class="text-[11px] font-medium text-slate-600">Brown</span>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="color" value="2" class="peer sr-only" checked>
+                        <div class="rounded-md border border-slate-200 bg-white p-2 flex flex-col items-center hover:bg-slate-50 peer-checked:border-green-500 peer-checked:bg-green-50 transition-all">
+                            <div class="w-5 h-5 rounded-full bg-green-500 mb-1 shadow-sm"></div>
+                            <span class="text-[11px] font-medium text-slate-600">Green</span>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="color" value="3" class="peer sr-only">
+                        <div class="rounded-md border border-slate-200 bg-white p-2 flex flex-col items-center hover:bg-slate-50 peer-checked:border-orange-500 peer-checked:bg-orange-50 transition-all">
+                            <div class="w-5 h-5 rounded-full bg-orange-500 mb-1 shadow-sm"></div>
+                            <span class="text-[11px] font-medium text-slate-600">Orange</span>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="color" value="4" class="peer sr-only">
+                        <div class="rounded-md border border-slate-200 bg-white p-2 flex flex-col items-center hover:bg-slate-50 peer-checked:border-pink-400 peer-checked:bg-pink-50 transition-all">
+                            <div class="w-5 h-5 rounded-full bg-pink-400 mb-1 shadow-sm"></div>
+                            <span class="text-[11px] font-medium text-slate-600">Pink</span>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="color" value="5" class="peer sr-only">
+                        <div class="rounded-md border border-slate-200 bg-white p-2 flex flex-col items-center hover:bg-slate-50 peer-checked:border-purple-500 peer-checked:bg-purple-50 transition-all">
+                            <div class="w-5 h-5 rounded-full bg-purple-500 mb-1 shadow-sm"></div>
+                            <span class="text-[11px] font-medium text-slate-600">Purple</span>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="color" value="6" class="peer sr-only">
+                        <div class="rounded-md border border-slate-200 bg-white p-2 flex flex-col items-center hover:bg-slate-50 peer-checked:border-red-500 peer-checked:bg-red-50 transition-all">
+                            <div class="w-5 h-5 rounded-full bg-red-500 mb-1 shadow-sm"></div>
+                            <span class="text-[11px] font-medium text-slate-600">Red</span>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="color" value="7" class="peer sr-only">
+                        <div class="rounded-md border border-slate-200 bg-white p-2 flex flex-col items-center hover:bg-slate-50 peer-checked:border-yellow-400 peer-checked:bg-yellow-50 transition-all">
+                            <div class="w-5 h-5 rounded-full bg-yellow-400 mb-1 shadow-sm"></div>
+                            <span class="text-[11px] font-medium text-slate-600">Yellow</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <button onclick="predictFruit()" type="submit" class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring bg-slate-900 text-white hover:bg-slate-900/90 h-10 px-4 py-2 w-full mt-2 shadow-sm">
+                <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Predict Result
+            </button>
+        </div>
+        <div id="resultBox" class="hidden mt-4 p-5 rounded-lg bg-indigo-50 border border-indigo-100 text-center transition-all shadow-inner">
+            <h2 id="fruitResult" class="text-3xl font-bold text-slate-800 capitalize">...</h2>
+            <img id="fruitImage" class="mx-auto mt-4 rounded-lg w-auto h-auto max-w-full max-h-full object-contain" style="display:none;" alt="Predicted fruit image shown below the result name in the app interface">
+        </div>
+    </form>
+    <script>
+        function formsubmit() {
+            event.preventDefault();
+        }
+        function predictFruit() {
+            const size = document.getElementById('size').value;
+            const weight = document.getElementById('weight').value;
+            const shape = document.querySelector('input[name="shape"]:checked').value;
+            const color = document.querySelector('input[name="color"]:checked').value;
+            const taste = document.querySelector('input[name="taste"]:checked').value;
+            if(!size || !weight) {
+                alert("Please fill in both Size and Weight fields!");
+                return;
+            }
+            const btn = document.querySelector('button');
+            const originalBtnText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Analyzing...';
+            btn.disabled = true;
+            fetch('/predict', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ 
+                    size: Number(size), 
+                    shape: Number(shape), 
+                    weight: Number(weight), 
+                    color: Number(color), 
+                    taste: Number(taste) 
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                btn.innerHTML = originalBtnText;
+                btn.disabled = false;
+                const resultBox = document.getElementById('resultBox');
+                const fruitResult = document.getElementById('fruitResult');
+                const fruitImage = document.getElementById('fruitImage');
+                resultBox.classList.remove('hidden');
+                fruitResult.innerText = data.fruit || "Error";
+                fruitImage.src = data.img_url || "";
+                fruitImage.style.display = "block";
+            })
+            .catch(error => {
+                btn.innerHTML = originalBtnText;
+                btn.disabled = false;
+                console.error('Error:', error);
+                alert("Connection Error. Is FastAPI running?");
+            });
+        }
+    </script>
+</body>
+</html>
