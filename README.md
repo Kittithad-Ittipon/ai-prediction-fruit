@@ -36,7 +36,7 @@ pip install -r app/requirements.txt
 
 **4. Start the FastAPI server** 
 ```bash
-uvicorn app.main:app --reload
+uvicorn app.main:app --reload --port 8080
 ```
 
 ### 🐳 Method 2 Running with Docker Compose
@@ -46,3 +46,8 @@ If Docker is installed on your system, you can easily deploy the application wit
 docker-compose up -d --build
 ```
 The system will automatically build the necessary Docker image and start the container in the background.
+
+## 🌐 Access
+After starting the server, open:
+- Web UI: http://localhost:8000
+- API docs (Swagger): http://localhost:8000/docs
