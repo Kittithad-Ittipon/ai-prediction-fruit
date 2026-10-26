@@ -15,6 +15,7 @@ services:
     ports:
       - "8000:8000"
     container_name: fastdev5090
+# OPEN IF JOIN lan-net NETWORK  ALREADY OR CHANGE NAME NETWORK FOR JOIN OTHER NETWORK
 #     networks:
 #       - lan-net
 
